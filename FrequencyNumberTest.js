@@ -1,10 +1,29 @@
 /**
  * Created by XAQ on 2017/4/19.
  */
-function main(string){
-    if(string === "" || string === " ")
-        return null;
-    var stringArry=string.split(" ");
+function getResult(elemArry,countArry){
+    var result="";
+    for(var i=0;i<elemArry.length;i++){
+        result += elemArry[i] + " " + countArry[i] + "\r\n";
+    }
+    return result;
+}
+function sort(elemArry,countArry){
+    for(var i=0;i<elemArry.length;i++){
+        for(var j=i+1;j<elemArry.length;j++){
+            if(countArry[i] < countArry[j]){
+                var n=countArry[i];
+                countArry[i]=countArry[j];
+                countArry[j]=n;
+                var s=elemArry[i];
+                elemArry[i]=elemArry[j];
+                elemArry[j]=s;
+            }
+        }
+    }
+    return getResult(elemArry,countArry);
+}
+function count(stringArry){
     var elemArry = new Array();
     var countArry = new Array();
     for(var i=0;i<stringArry.length;i++){
@@ -23,22 +42,11 @@ function main(string){
             countArry[countArry.length] = 1;
         }
     }
-    for(var i=0;i<elemArry.length;i++){
-        for(var j=i+1;j<elemArry.length;j++){
-            if(countArry[i] < countArry[j]){
-                var n=countArry[i];
-                countArry[i]=countArry[j];
-                countArry[j]=n;
-                var s=elemArry[i];
-                elemArry[i]=elemArry[j];
-                elemArry[j]=s;
-            }
-        }
-    }
-    var result="";
-    for(var i=0;i<elemArry.length;i++){
-        result += elemArry[i] + " " + countArry[i] + "\r\n";
-    }
-    return result;
+    return sort(elemArry,countArry);
+}
+function main(string){
+    if(string === "" || string === " ")
+        return null;
+    return count(string.split(/\s+/));
 }
 module.exports=main;
